@@ -25,6 +25,7 @@ GoalPublisherNode::GoalPublisherNode() : tf2_listener_(tf2_buffer_)
   this->sub_goal_pose_ = nh_.subscribe("/move_base_simple/goal", 1, &GoalPublisherNode::goalPoseCallback, this);
   this->sub_box_markers_ = nh_.subscribe("/gazebo/ground_truth/box_markers", 1, &GoalPublisherNode::boxMarkersCallback, this);
   
+
   // Initialization
   this->robot_frame_ = "base_link";
   this->map_frame_ = "map";
@@ -133,6 +134,7 @@ void GoalPublisherNode::goalNameCallback(const std_msgs::String::ConstPtr& name)
   // Transform the goal pose to map frame
   geometry_msgs::PoseStamped P_map_goal;
   tf2::doTransform(P_world_goal, P_map_goal, transform_map_world);
+
   P_map_goal.header.stamp = ros::Time::now();
   P_map_goal.header.frame_id = map_frame_;
 
@@ -142,6 +144,13 @@ void GoalPublisherNode::goalNameCallback(const std_msgs::String::ConstPtr& name)
   // Publish goal pose in map frame 
   if (this->goal_type_ != "box")
   {
+    this->pub_goal_.publish(P_map_goal);
+  }
+
+  if (this->goal_type_ == "box")
+  { 
+    P_map_goal.pose.position.x = P_map_goal.pose.position.x - 1;
+    if(P_map_goal.pose.position.x < 0) P_map_goal.pose.position.x = 0.0;
     this->pub_goal_.publish(P_map_goal);
   }
 

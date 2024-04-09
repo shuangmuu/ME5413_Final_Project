@@ -18,6 +18,9 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
   tf2_eigen
   tf2_geometry_msgs
+
+  sensor_msgs
+  geometry_msgs
 )
 find_package(gazebo REQUIRED)
 
@@ -33,6 +36,13 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${GAZEBO_INCLUDE_DIRS}
 )
+
+# catkin_install_python(PROGRAMS 
+#   scripts/detector.py
+#   scripts/viz.py
+#   scripts/roi_coordinate_calculator.py
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
 link_directories(${GAZEBO_LIBRARY_DIRS})
 list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")

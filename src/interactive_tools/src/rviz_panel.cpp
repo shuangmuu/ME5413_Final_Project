@@ -24,6 +24,7 @@ namespace rviz_panel
         this->pub_goal_ = nh_.advertise<std_msgs::String>("/rviz_panel/goal_name", 1);
         this->pub_respawn_ = nh_.advertise<std_msgs::Int16>("/rviz_panel/respawn_objects", 1);
         // sub_error_to_goal_ = nh_.subscribe("/interactive_tools/error_to_goal", 1, &GoalPublisherNode::goalPoseCallback, this);
+        // this->pub_box2_pose = nh_.advertise<geometry_msgs::PoseStamped>("/box_2", 1);
 
         // Connect the clicked signals to slots
         connect(ui_->pushButton_1_1, SIGNAL(clicked()), this, SLOT(on_button_1_1_clicked()));
